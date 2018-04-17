@@ -1,10 +1,15 @@
-cmake_minimum_required(VERSION 3.0)
+# Copyright (c) Nico Zink
+# https://github.com/nicozink/cpp_util.git
+# Licensed under GNU General Public License 3.0 or later. 
+ 
+ cmake_minimum_required(VERSION 3.0)
 
 PROJECT(cpp_util VERSION 1.0.0)
 
 enable_testing()
 
 set(SRC_INCLUDE
+	${CMAKE_CURRENT_SOURCE_DIR}/include/cpp_util/types/singleton.h
 	${CMAKE_CURRENT_SOURCE_DIR}/include/cpp_util/types/type_to_id.h
 	${CMAKE_CURRENT_SOURCE_DIR}/include/cpp_util/types/value_to_id.h
 	${CMAKE_CURRENT_SOURCE_DIR}/include/cpp_util/types/variant_list.h
@@ -42,7 +47,7 @@ target_include_directories(cpp_util
 	PRIVATE
 	${CMAKE_CURRENT_SOURCE_DIR}/src)
 
-if (EXISTS libraries/unittest)
+if (EXISTS libraries/unittest/CMakeLists.txt)
 	add_subdirectory(libraries/unittest)
 endif()
 
