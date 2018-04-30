@@ -2,13 +2,17 @@
 # https://github.com/nicozink/cpp_util.git
 # Licensed under GNU General Public License 3.0 or later. 
  
- cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.0)
+
+#Use solution folders. 
+set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 PROJECT(cpp_util VERSION 1.0.0)
 
 enable_testing()
 
 set(SRC_INCLUDE
+	${CMAKE_CURRENT_SOURCE_DIR}/include/cpp_util/debug/assert.h
 	${CMAKE_CURRENT_SOURCE_DIR}/include/cpp_util/types/singleton.h
 	${CMAKE_CURRENT_SOURCE_DIR}/include/cpp_util/types/type_to_id.h
 	${CMAKE_CURRENT_SOURCE_DIR}/include/cpp_util/types/value_to_id.h
@@ -17,6 +21,7 @@ set(SRC_INCLUDE
 	${CMAKE_CURRENT_SOURCE_DIR}/include/cpp_util/types/variant_type.h)
 
 set(SRC_MAIN
+	${CMAKE_CURRENT_SOURCE_DIR}/src/debug/assert.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/src/types/type_to_id.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/src/types/value_to_id.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/src/types/variant_list.cpp
@@ -52,10 +57,12 @@ if (EXISTS libraries/unittest/CMakeLists.txt)
 endif()
 
 add_library(cpp_util_tests ${SRC_TEST})
+set_target_properties(cpp_util_tests PROPERTIES FOLDER "tests")
 
 target_link_libraries(cpp_util_tests cpp_util unittest)
 
 add_executable(cpp_util_test ${SRC_TEST})
+set_target_properties(cpp_util_test PROPERTIES FOLDER "executable")
 
 target_link_libraries(cpp_util_test cpp_util unittest)
 
