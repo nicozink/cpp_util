@@ -29,7 +29,7 @@ public:
 	// Returns the singleton instance as a reference.
 	static T& GetInstance()
 	{
-		static T& instance = T();
+		static T instance;
 		return instance;
 	}
 };
