@@ -6,10 +6,17 @@
 class VariantType
 {
 public:
+	template <typename T>
+	static VariantType Create(T& item);
+
+	static VariantType Null;
 
 	VariantType();
 
 	~VariantType();
+
+	bool operator ==(const VariantType &b) const;
+	bool operator !=(const VariantType &b) const;
 
 	template <typename T>
 	T& get();
@@ -19,8 +26,19 @@ public:
 
 private:
 
+	static void* null_ptr;
+
 	std::shared_ptr<void> variant_item;
 };
+
+template <typename T>
+VariantType VariantType::Create(T& item)
+{
+	VariantType vt;
+	vt.set<T>(item);
+
+	return vt;
+}
 
 template <typename T>
 T& VariantType::get()

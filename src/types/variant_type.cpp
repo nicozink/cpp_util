@@ -20,3 +20,17 @@ VariantType::~VariantType()
 {
 
 }
+
+void* VariantType::null_ptr = nullptr;
+
+VariantType VariantType::Null = VariantType::Create<void*>(VariantType::null_ptr);
+
+bool VariantType::operator ==(const VariantType &b) const
+{
+	return variant_item == b.variant_item;
+}
+
+bool VariantType::operator !=(const VariantType &b) const
+{
+	return variant_item != b.variant_item;
+}

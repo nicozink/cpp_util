@@ -43,7 +43,7 @@ foreach(_source IN ITEMS ${SRC_INCLUDE} ${SRC_MAIN} ${SRC_TEST})
 	source_group("${_group_path}" FILES "${_source}")
 endforeach()
 
-add_library(cpp_util ${SRC_MAIN} ${SRC_INCLUDE})
+add_library(cpp_util ${SRC_INCLUDE} ${SRC_MAIN})
 
 target_include_directories(cpp_util
 	PUBLIC
