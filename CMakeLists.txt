@@ -13,6 +13,7 @@ enable_testing()
 
 set(SRC_INCLUDE
 	${CMAKE_CURRENT_SOURCE_DIR}/include/cpp_util/debug/assert.h
+	${CMAKE_CURRENT_SOURCE_DIR}/include/cpp_util/types/automatic_singleton.h
 	${CMAKE_CURRENT_SOURCE_DIR}/include/cpp_util/types/singleton.h
 	${CMAKE_CURRENT_SOURCE_DIR}/include/cpp_util/types/type_to_id.h
 	${CMAKE_CURRENT_SOURCE_DIR}/include/cpp_util/types/value_to_id.h
