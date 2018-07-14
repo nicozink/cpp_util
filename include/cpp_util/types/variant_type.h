@@ -19,7 +19,7 @@ public:
 	bool operator !=(const VariantType &b) const;
 
 	template <typename T>
-	T& get();
+	T& get() const;
 
 	template <typename T>
 	void set(const T& item);
@@ -41,7 +41,7 @@ VariantType VariantType::Create(T& item)
 }
 
 template <typename T>
-T& VariantType::get()
+T& VariantType::get() const
 {
 	return *std::static_pointer_cast<T>(variant_item);
 }

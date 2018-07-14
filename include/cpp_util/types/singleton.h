@@ -26,12 +26,29 @@ public:
 	// Public Static Methods
 	//
 
+	// Initialises the singleton instance.
+	static T& Create()
+	{
+		instance = new T();
+		return *instance;
+	}
+
+	// Destroys the singleton instance.
+	static void Destroy()
+	{
+		delete instance;
+	}
+
 	// Returns the singleton instance as a reference.
 	static T& GetInstance()
 	{
-		static T instance;
-		return instance;
+		return *instance;
 	}
+
+	static T* instance;
 };
+
+template <typename T>
+T* Singleton<T>::instance = nullptr;
 
 #endif
