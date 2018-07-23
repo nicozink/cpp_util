@@ -31,7 +31,7 @@ public:
 template <typename T>
 T& VariantList::get(int i)
 {
-	return (*this)[i].get<T>();
+	return (*this)[i].get<T&>();
 }
 
 template <typename T>

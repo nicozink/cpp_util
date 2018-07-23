@@ -27,10 +27,10 @@ VariantType VariantType::Null = VariantType::Create<void*>(VariantType::null_ptr
 
 bool VariantType::operator ==(const VariantType &b) const
 {
-	return variant_item == b.variant_item;
+	return variant_item.variant_ptr == b.variant_item.variant_ptr;
 }
 
 bool VariantType::operator !=(const VariantType &b) const
 {
-	return variant_item != b.variant_item;
+	return variant_item.variant_ptr != b.variant_item.variant_ptr;
 }
