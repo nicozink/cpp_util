@@ -48,7 +48,23 @@ namespace
 
 			T* item_ptr = &value;
 
-			to_return.variant_ptr = std::shared_ptr<T>(item_ptr, [](void* p) { });
+			to_return.variant_ptr = std::shared_ptr<T>(item_ptr, [](void* p) {});
+
+			return to_return;
+		}
+	};
+
+	template <typename T>
+	class VariantStorage<T&&>
+	{
+	public:
+		static VariantItem Set(T&& value)
+		{
+			VariantItem to_return;
+
+			T* item_ptr = new T(std::move(value));
+
+			to_return.variant_ptr = std::shared_ptr<T>(item_ptr, [](void* p) {});
 
 			return to_return;
 		}
@@ -116,5 +132,5 @@ T VariantType::get() const
 template <typename T>
 void VariantType::set(const T item)
 {
-	variant_item = VariantStorage<T>::Set(item);
+	variant_item = VariantStorage<T>::Set(std::move(item));
 }

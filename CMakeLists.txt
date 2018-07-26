@@ -13,7 +13,18 @@ enable_testing()
 
 set(SRC_INCLUDE
 	${CMAKE_CURRENT_SOURCE_DIR}/include/cpp_util/debug/assert.h
+	${CMAKE_CURRENT_SOURCE_DIR}/include/cpp_util/event/event.h
+	${CMAKE_CURRENT_SOURCE_DIR}/include/cpp_util/event/listener.h
+	${CMAKE_CURRENT_SOURCE_DIR}/include/cpp_util/log/file_log.h
+	${CMAKE_CURRENT_SOURCE_DIR}/include/cpp_util/log/log_level.h
+	${CMAKE_CURRENT_SOURCE_DIR}/include/cpp_util/log/log_object.h
+	${CMAKE_CURRENT_SOURCE_DIR}/include/cpp_util/log/log_writer.h
+	${CMAKE_CURRENT_SOURCE_DIR}/include/cpp_util/log/logger_base.h
+	${CMAKE_CURRENT_SOURCE_DIR}/include/cpp_util/log/logger.h
+	${CMAKE_CURRENT_SOURCE_DIR}/include/cpp_util/log/memory_log.h
+	${CMAKE_CURRENT_SOURCE_DIR}/include/cpp_util/log/terminal_log.h
 	${CMAKE_CURRENT_SOURCE_DIR}/include/cpp_util/types/automatic_singleton.h
+	${CMAKE_CURRENT_SOURCE_DIR}/include/cpp_util/types/memory.h
 	${CMAKE_CURRENT_SOURCE_DIR}/include/cpp_util/types/singleton.h
 	${CMAKE_CURRENT_SOURCE_DIR}/include/cpp_util/types/type_to_id.h
 	${CMAKE_CURRENT_SOURCE_DIR}/include/cpp_util/types/value_to_id.h
@@ -23,12 +34,26 @@ set(SRC_INCLUDE
 
 set(SRC_MAIN
 	${CMAKE_CURRENT_SOURCE_DIR}/src/debug/assert.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/src/log/file_log.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/src/log/log_level.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/src/log/log_object.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/src/log/log_writer.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/src/log/logger_base.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/src/log/logger.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/src/log/memory_log.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/src/log/terminal_log.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/src/types/memory.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/src/types/type_to_id.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/src/types/value_to_id.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/src/types/variant_list.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/src/types/variant_type.cpp)
 
 set(SRC_TEST
+	${CMAKE_CURRENT_SOURCE_DIR}/test/event/test_event.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/test/log/test_log_move.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/test/log/test_logger.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/test/log/test_memory_log.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/test/types/test_memory.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/test/types/test_type_to_id.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/test/types/test_value_to_id.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/test/types/test_variant_list.cpp
