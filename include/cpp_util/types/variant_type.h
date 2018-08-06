@@ -34,6 +34,25 @@ namespace
 	};
 
 	template <typename T>
+	class VariantStorage<T*>
+	{
+	public:
+		static T* Get(const VariantItem& variant_item)
+		{
+			return std::static_pointer_cast<T>(variant_item.variant_ptr);
+		}
+
+		static VariantItem Set(T* value)
+		{
+			VariantItem to_return;
+
+			to_return.variant_ptr = std::shared_ptr<T>(value, [](void* p) {});
+
+			return to_return;
+		}
+	};
+
+	template <typename T>
 	class VariantStorage<T&>
 	{
 	public:
