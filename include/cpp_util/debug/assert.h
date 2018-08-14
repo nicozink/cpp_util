@@ -19,6 +19,6 @@
 // Macro Definitions
 
 // Asserts the condition, and prints the error otherwise.
-#define Assert(condition, message) \
+#define D4_ASSERT(condition, message) \
   assert(condition && message);
 #endif
