@@ -17,6 +17,12 @@ Memory::Memory()
 	m_size = 0;
 }
 
+Memory::Memory(void* ptr)
+{
+	m_ptr = Memory::deletable_pointer(ptr, [](void* ptr) {});
+	m_size = 0;
+}
+
 Memory::Memory(void* ptr, std::size_t size)
 {
 	m_ptr = Memory::deletable_pointer(ptr, [](void* ptr) { });
