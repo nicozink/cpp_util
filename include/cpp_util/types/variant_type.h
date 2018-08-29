@@ -28,7 +28,7 @@ namespace
 	public:
 		static T* Get(const std::shared_ptr<void>& variant_item)
 		{
-			return std::static_pointer_cast<T>(variant_item);
+			return std::static_pointer_cast<T>(variant_item).get();
 		}
 	};
 
