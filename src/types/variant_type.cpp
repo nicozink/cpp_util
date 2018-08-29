@@ -11,6 +11,17 @@ All rights reserved.
 
 // System Includes
 
+namespace
+{
+	VariantType CreateNull()
+	{
+		VariantType variant_type;
+		variant_type.set<void>(nullptr);
+
+		return variant_type;
+	}
+}
+
 VariantType::VariantType()
 {
 	
@@ -23,14 +34,14 @@ VariantType::~VariantType()
 
 void* VariantType::null_ptr = nullptr;
 
-VariantType VariantType::Null = VariantType::Create<void*>(VariantType::null_ptr);
+VariantType VariantType::Null = CreateNull();
 
 bool VariantType::operator ==(const VariantType &b) const
 {
-	return variant_item.variant_ptr == b.variant_item.variant_ptr;
+	return variant_ptr == b.variant_ptr;
 }
 
 bool VariantType::operator !=(const VariantType &b) const
 {
-	return variant_item.variant_ptr != b.variant_item.variant_ptr;
+	return variant_ptr != b.variant_ptr;
 }

@@ -31,6 +31,7 @@ set(SRC_INCLUDE
 	${CMAKE_CURRENT_SOURCE_DIR}/include/cpp_util/types/value_to_id.h
 	${CMAKE_CURRENT_SOURCE_DIR}/include/cpp_util/types/variant_list.h
 	${CMAKE_CURRENT_SOURCE_DIR}/include/cpp_util/types/variant_map.h
+	${CMAKE_CURRENT_SOURCE_DIR}/include/cpp_util/types/variant_type_helper.h
 	${CMAKE_CURRENT_SOURCE_DIR}/include/cpp_util/types/variant_type.h)
 
 set(SRC_MAIN

@@ -1,35 +1,24 @@
+// Copyright (c) Nico Zink
+// https://github.com/nicozink/darkentity.git
+// Licensed under GNU General Public License 3.0 or later.
+
 #pragma once
 
+#ifndef cpp_util_types_variant_type_h
+#define cpp_util_types_variant_type_h
+
+// System Includes
 #include <memory>
-#include <vector>
 
 namespace
 {
-	struct VariantItem
-	{
-		std::shared_ptr<void> variant_ptr;
-	};
-
 	template <typename T>
 	class VariantStorage
 	{
 	public:
-		static T Get(const VariantItem& variant_item)
+		static T Get(const std::shared_ptr<void>& variant_item)
 		{
-			return *std::static_pointer_cast<T>(variant_item.variant_ptr);
-		}
-
-		static VariantItem Set(T value)
-		{
-			VariantItem to_return;
-			
-			T* item_ptr = new T(value);
-
-			to_return.variant_ptr = std::shared_ptr<T>(item_ptr, [](void* p) {
-				delete static_cast<T*>(p);
-			});
-
-			return to_return;
+			return *std::static_pointer_cast<T>(variant_item);
 		}
 	};
 
@@ -37,18 +26,9 @@ namespace
 	class VariantStorage<T*>
 	{
 	public:
-		static T* Get(const VariantItem& variant_item)
+		static T* Get(const std::shared_ptr<void>& variant_item)
 		{
-			return std::static_pointer_cast<T>(variant_item.variant_ptr);
-		}
-
-		static VariantItem Set(T* value)
-		{
-			VariantItem to_return;
-
-			to_return.variant_ptr = std::shared_ptr<T>(value, [](void* p) {});
-
-			return to_return;
+			return std::static_pointer_cast<T>(variant_item);
 		}
 	};
 
@@ -56,36 +36,9 @@ namespace
 	class VariantStorage<T&>
 	{
 	public:
-		static T& Get(const VariantItem& variant_item)
+		static T& Get(const std::shared_ptr<void>& variant_item)
 		{
-			return *std::static_pointer_cast<T>(variant_item.variant_ptr);
-		}
-
-		static VariantItem Set(T& value)
-		{
-			VariantItem to_return;
-
-			T* item_ptr = &value;
-
-			to_return.variant_ptr = std::shared_ptr<T>(item_ptr, [](void* p) {});
-
-			return to_return;
-		}
-	};
-
-	template <typename T>
-	class VariantStorage<T&&>
-	{
-	public:
-		static VariantItem Set(T&& value)
-		{
-			VariantItem to_return;
-
-			T* item_ptr = new T(std::move(value));
-
-			to_return.variant_ptr = std::shared_ptr<T>(item_ptr, [](void* p) {});
-
-			return to_return;
+			return *std::static_pointer_cast<T>(variant_item);
 		}
 	};
 }
@@ -93,11 +46,6 @@ namespace
 class VariantType
 {
 public:
-
-	// Static Methods
-
-	template <typename T>
-	static VariantType Create(T item);
 
 	// Static Variables
 
@@ -120,7 +68,13 @@ public:
 	T get() const;
 
 	template <typename T>
-	void set(const T item);
+	void set(T* item);
+
+	template <typename T>
+	void set(T& item);
+
+	template <typename T>
+	void set(T&& item);
 
 private:
 
@@ -130,26 +84,39 @@ private:
 
 	// Private Variables
 
-	VariantItem variant_item;
+	std::shared_ptr<void> variant_ptr;
 };
-
-template <typename T>
-VariantType VariantType::Create(T item)
-{
-	VariantType vt;
-	vt.set<T>(item);
-
-	return vt;
-}
 
 template <typename T>
 T VariantType::get() const
 {
-	return VariantStorage<T>::Get(variant_item);
+	return VariantStorage<T>::Get(variant_ptr);
 }
 
 template <typename T>
-void VariantType::set(const T item)
+void VariantType::set(T* item)
 {
-	variant_item = VariantStorage<T>::Set(std::move(item));
+	variant_ptr = std::shared_ptr<void>((void*)item, [](void* p) { });
 }
+
+template <typename T>
+void VariantType::set(T& item)
+{
+	std::remove_reference<T>::type* item_ptr = new T(item);
+
+	variant_ptr = std::shared_ptr<void>((void*)item_ptr, [](void* p) {
+		delete static_cast<T*>(p);
+	});
+}
+
+template <typename T>
+void VariantType::set(T&& item)
+{
+	T* item_ptr = new T(std::move(item));
+
+	variant_ptr = std::shared_ptr<void>((void*)item_ptr, [](void* p) {
+		delete static_cast<T*>(p);
+	});
+}
+
+#endif
