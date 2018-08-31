@@ -21,6 +21,14 @@ public:
 		
 		return variant_type;
 	}
+
+	static VariantType Create(T&& value)
+	{
+		VariantType variant_type;
+		variant_type.set<T>(std::move(value));
+
+		return variant_type;
+	}
 };
 
 template <typename T>
