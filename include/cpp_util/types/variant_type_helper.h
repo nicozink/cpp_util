@@ -70,4 +70,30 @@ public:
 	}
 };
 
+template <typename T>
+class VariantTypeHelper<std::shared_ptr<T>>
+{
+public:
+	static VariantType Create(std::shared_ptr<T> value)
+	{
+		VariantType variant_type;
+		variant_type.set<T>(value);
+
+		return variant_type;
+	}
+};
+
+template <typename T>
+class VariantTypeHelper<std::shared_ptr<T>&>
+{
+public:
+	static VariantType Create(std::shared_ptr<T>& value)
+	{
+		VariantType variant_type;
+		variant_type.set<T>(value);
+
+		return variant_type;
+	}
+};
+
 #endif

@@ -41,6 +41,16 @@ namespace
 			return *std::static_pointer_cast<T>(variant_item);
 		}
 	};
+
+	template <typename T>
+	class VariantStorage<std::shared_ptr<T>>
+	{
+	public:
+		static std::shared_ptr<T> Get(const std::shared_ptr<void>& variant_item)
+		{
+			return std::static_pointer_cast<T>(variant_item);
+		}
+	};
 }
 
 class VariantType
@@ -75,6 +85,9 @@ public:
 
 	template <typename T>
 	void set(T&& item);
+
+	template <typename T>
+	void set(std::shared_ptr<T> item);
 
 private:
 
@@ -117,6 +130,12 @@ void VariantType::set(T&& item)
 	variant_ptr = std::shared_ptr<void>((void*)item_ptr, [](void* p) {
 		delete static_cast<T*>(p);
 	});
+}
+
+template <typename T>
+void VariantType::set(std::shared_ptr<T> item)
+{
+	variant_ptr = item;
 }
 
 #endif
