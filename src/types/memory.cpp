@@ -35,6 +35,17 @@ Memory::Memory(void* ptr, std::size_t size, Memory::deleter deleter)
 	m_size = size;
 }
 
+Memory::Memory(Memory&& other)
+{
+	m_ptr = std::move(other.m_ptr);
+	m_size = other.m_size;
+}
+
+Memory::~Memory()
+{
+	
+}
+
 std::size_t Memory::size()
 {
 	return m_size;

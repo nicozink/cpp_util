@@ -25,6 +25,9 @@ public:
 	typedef std::unique_ptr<void, deleter> deletable_pointer;
 
 	template <typename T>
+	static Memory Copy(T* ptr, std::size_t size);
+
+	template <typename T>
 	static Memory Create(T* ptr);
 
 	template <typename T>
@@ -38,6 +41,10 @@ public:
 
 	Memory(void* ptr, std::size_t size, deleter deleter);
 
+	Memory(Memory&& other);
+
+	~Memory();
+
 	std::size_t size();
 
 	void* ptr();
@@ -48,6 +55,17 @@ private:
 
 	std::size_t m_size;
 };
+
+template <typename T>
+static Memory Memory::Copy(T* ptr, std::size_t size)
+{
+	void* ptr_copy = malloc(size);
+	memcpy(ptr_copy, ptr, size);
+
+	return Memory(ptr_copy, size, [](void* ptr) {
+		free((T*)ptr);
+	});
+}
 
 template <typename T>
 Memory Memory::Create(T* ptr)
