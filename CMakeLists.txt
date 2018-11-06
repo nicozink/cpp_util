@@ -37,7 +37,6 @@ set(SRC_INCLUDE
 	${CMAKE_CURRENT_SOURCE_DIR}/include/cpp_util/types/variant_type.h)
 
 set(SRC_MAIN
-	${CMAKE_CURRENT_SOURCE_DIR}/src/command_buffer/command_buffer.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/src/debug/assert.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/src/handle/handle.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/src/handle/handle_generator.cpp
