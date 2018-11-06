@@ -15,6 +15,8 @@ set(SRC_INCLUDE
 	${CMAKE_CURRENT_SOURCE_DIR}/include/cpp_util/debug/assert.h
 	${CMAKE_CURRENT_SOURCE_DIR}/include/cpp_util/event/event.h
 	${CMAKE_CURRENT_SOURCE_DIR}/include/cpp_util/event/listener.h
+	${CMAKE_CURRENT_SOURCE_DIR}/include/cpp_util/handle/handle.h
+	${CMAKE_CURRENT_SOURCE_DIR}/include/cpp_util/handle/handle_generator.h
 	${CMAKE_CURRENT_SOURCE_DIR}/include/cpp_util/log/file_log.h
 	${CMAKE_CURRENT_SOURCE_DIR}/include/cpp_util/log/log_level.h
 	${CMAKE_CURRENT_SOURCE_DIR}/include/cpp_util/log/log_object.h
@@ -35,7 +37,10 @@ set(SRC_INCLUDE
 	${CMAKE_CURRENT_SOURCE_DIR}/include/cpp_util/types/variant_type.h)
 
 set(SRC_MAIN
+	${CMAKE_CURRENT_SOURCE_DIR}/src/command_buffer/command_buffer.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/src/debug/assert.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/src/handle/handle.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/src/handle/handle_generator.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/src/log/file_log.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/src/log/log_level.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/src/log/log_object.cpp
