@@ -35,8 +35,6 @@ public:
 
 	Memory();
 
-	Memory(void* ptr);
-
 	Memory(void* ptr, std::size_t size);
 
 	Memory(void* ptr, std::size_t size, deleter deleter);
