@@ -15,6 +15,7 @@ set(SRC_INCLUDE
 	${CMAKE_CURRENT_SOURCE_DIR}/include/cpp_util/debug/assert.h
 	${CMAKE_CURRENT_SOURCE_DIR}/include/cpp_util/event/event.h
 	${CMAKE_CURRENT_SOURCE_DIR}/include/cpp_util/event/listener.h
+	${CMAKE_CURRENT_SOURCE_DIR}/include/cpp_util/event/observable.h
 	${CMAKE_CURRENT_SOURCE_DIR}/include/cpp_util/handle/handle.h
 	${CMAKE_CURRENT_SOURCE_DIR}/include/cpp_util/handle/handle_generator.h
 	${CMAKE_CURRENT_SOURCE_DIR}/include/cpp_util/log/file_log.h
