@@ -14,12 +14,12 @@ public:
 	Handle();
 
     // Returns the id of the handle.
-    int get_id();
+    int get_id() const;
 
     // Returns the index of the handle.
-    int get_index();
+    int get_index() const;
 
-	bool is_valid();
+	bool is_valid() const;
 
 	// Sets the id of the handle.
 	void set_id(int id);

@@ -11,18 +11,18 @@ Handle::Handle()
 }
 
 // Returns the id of the handle.
-int Handle::get_id()
+int Handle::get_id() const
 {
 	return id;
 }
 
 // Returns the index of the handle.
-int Handle::get_index()
+int Handle::get_index() const
 {
 	return index;
 }
 
-bool Handle::is_valid()
+bool Handle::is_valid() const
 {
 	return id != -1;
 }
