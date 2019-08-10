@@ -76,7 +76,7 @@ foreach(_source IN ITEMS ${SRC_INCLUDE} ${SRC_MAIN} ${SRC_TEST})
 	source_group("${_group_path}" FILES "${_source}")
 endforeach()
 
-add_library(cpp_util ${SRC_INCLUDE} ${SRC_MAIN})
+create_library(cpp_util library ${SRC_INCLUDE} ${SRC_MAIN})
 
 target_include_directories(cpp_util
 	PUBLIC
@@ -91,13 +91,11 @@ endif()
 
 target_compile_features(cpp_util PUBLIC cxx_std_17)
 
-add_library(cpp_util_tests ${SRC_TEST})
-set_target_properties(cpp_util_tests PROPERTIES FOLDER "tests")
+create_library(cpp_util_tests tests ${SRC_TEST})
 
 target_link_libraries(cpp_util_tests cpp_util unittest)
 
-add_executable(cpp_util_test ${SRC_TEST})
-set_target_properties(cpp_util_test PROPERTIES FOLDER "executable")
+create_executable(cpp_util_test test ${SRC_TEST})
 
 target_link_libraries(cpp_util_test cpp_util unittest)
 
