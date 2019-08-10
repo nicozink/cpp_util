@@ -5,7 +5,7 @@
 #include <cpp_util/handle/handle.h>
 
 Handle::Handle()
-	: id{ -1 }, index{ -1 }
+	: id(-1), index(-1)
 {
 
 }

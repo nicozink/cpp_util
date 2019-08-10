@@ -55,7 +55,7 @@ private:
 };
 
 template <typename T>
-static Memory Memory::Copy(T* ptr, std::size_t size)
+Memory Memory::Copy(T* ptr, std::size_t size)
 {
 	void* ptr_copy = malloc(size);
 	memcpy(ptr_copy, ptr, size);

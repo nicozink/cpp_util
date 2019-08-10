@@ -70,7 +70,7 @@ THandle HandleGenerator<THandle>::create()
 }
 
 template <typename THandle>
-bool is_valid(THandle handle)
+bool HandleGenerator<THandle>::is_valid(THandle handle)
 {
     return handles[handle.get_index()] == handle.get_id();
 }

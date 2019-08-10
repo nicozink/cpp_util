@@ -9,6 +9,7 @@
 
 // System Includes
 #include <memory>
+#include <type_traits>
 
 namespace
 {
@@ -115,7 +116,7 @@ void VariantType::set(T* item)
 template <typename T>
 void VariantType::set(T& item)
 {
-	std::remove_reference<T>::type* item_ptr = new T(item);
+    typename std::remove_reference<T>::type* item_ptr = new T(item);
 
 	variant_ptr = std::shared_ptr<void>((void*)item_ptr, [](void* p) {
 		delete static_cast<T*>(p);

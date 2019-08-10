@@ -89,6 +89,8 @@ if (EXISTS libraries/unittest/CMakeLists.txt)
 	add_subdirectory(libraries/unittest)
 endif()
 
+target_compile_features(cpp_util PUBLIC cxx_std_17)
+
 add_library(cpp_util_tests ${SRC_TEST})
 set_target_properties(cpp_util_tests PROPERTIES FOLDER "tests")
 
