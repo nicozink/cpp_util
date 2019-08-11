@@ -39,7 +39,7 @@ public:
 
 	Memory(void* ptr, std::size_t size, deleter deleter);
 
-	Memory(Memory&& other);
+	Memory(Memory&& other) noexcept;
 
 	~Memory();
 

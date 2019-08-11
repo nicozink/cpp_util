@@ -10,7 +10,7 @@ All rights reserved.
 #include <cpp_util/log/log_writer.h>
 
 // External Includes
-#include <stdio.h>
+#include <fstream>
 #include <string>
 
 // A class which outputs log messages to a file.
@@ -41,7 +41,7 @@ class FileLog : public ILogWriter
   private:
     
     // Stores a reference to the file.
-    FILE* file;
+    std::ofstream m_file;
 };
 
 #endif

@@ -5,7 +5,7 @@
 #include <cpp_util/handle/handle.h>
 
 Handle::Handle()
-	: id(-1), index(-1)
+	: m_id(-1), m_index(-1)
 {
 
 }
@@ -13,28 +13,28 @@ Handle::Handle()
 // Returns the id of the handle.
 int Handle::get_id() const
 {
-	return id;
+	return m_id;
 }
 
 // Returns the index of the handle.
 int Handle::get_index() const
 {
-	return index;
+	return m_index;
 }
 
 bool Handle::is_valid() const
 {
-	return id != -1;
+	return m_id != -1;
 }
 
 // Sets the id of the handle.
 void Handle::set_id(int id)
 {
-	this->id = id;
+	m_id = id;
 }
 
 // Sets the index of the handle.
 void Handle::set_index(int index)
 {
-	this->index = index;
+	m_index = index;
 }

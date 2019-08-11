@@ -29,9 +29,9 @@ public:
 
 private:
 
-    int id;
+    int m_id;
     
-    int index;
+    int m_index;
 };
 
 #endif

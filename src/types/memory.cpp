@@ -13,13 +13,13 @@ All rights reserved.
 
 Memory::Memory()
 {
-	m_ptr = Memory::deletable_pointer(nullptr, [](void* ptr) {});
+	m_ptr = Memory::deletable_pointer(nullptr, [](void*) {});
 	m_size = 0;
 }
 
 Memory::Memory(void* ptr, std::size_t size)
 {
-	m_ptr = Memory::deletable_pointer(ptr, [](void* ptr) { });
+	m_ptr = Memory::deletable_pointer(ptr, [](void*) { });
 	m_size = size;
 }
 
@@ -29,7 +29,7 @@ Memory::Memory(void* ptr, std::size_t size, Memory::deleter deleter)
 	m_size = size;
 }
 
-Memory::Memory(Memory&& other)
+Memory::Memory(Memory&& other) noexcept
 {
 	m_ptr = std::move(other.m_ptr);
 	m_size = other.m_size;

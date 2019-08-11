@@ -110,7 +110,7 @@ T VariantType::get() const
 template <typename T>
 void VariantType::set(T* item)
 {
-	variant_ptr = std::shared_ptr<void>((void*)item, [](void* p) { });
+	variant_ptr = std::shared_ptr<void>((void*)item, [](void*) { });
 }
 
 template <typename T>

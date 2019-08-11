@@ -52,27 +52,7 @@ public:
 
     return LogObject(listeners, logLevel, stream.str());
   }
-    
-  // Writes the message to the log.
-  // @param format The format.
-  // @param ... The log data.
-  LogObject operator()(std::string format, ...)
-  {
-    const int LOG_BUFFER_LENGTH = 512;
-
-    char cmessage[LOG_BUFFER_LENGTH];
-
-    va_list args;
-
-    va_start(args, format);
-
-    vsnprintf(cmessage, LOG_BUFFER_LENGTH, format.c_str(), args);
-
-    va_end(args);
-
-    return LogObject(listeners, logLevel, cmessage);
-  }
-
+  
 private:
     
   //
