@@ -44,7 +44,7 @@ THandle HandleGenerator<THandle>::create()
     if (next_index == -1)
     {
         THandle handle;
-		handle.set_index(handles.size());
+		handle.set_index((int)handles.size());
 		handle.set_id(last_id);
 		handles.push_back(last_id);
 
