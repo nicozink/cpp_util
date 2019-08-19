@@ -58,7 +58,11 @@ template <typename T>
 Memory Memory::Copy(T* ptr, std::size_t size)
 {
 	void* ptr_copy = malloc(size);
-	memcpy(ptr_copy, ptr, size);
+
+	if (ptr_copy != nullptr)
+	{
+		memcpy(ptr_copy, ptr, size);
+	}
 
 	return Memory(ptr_copy, size, [](void* ptr) {
 		free((T*)ptr);
