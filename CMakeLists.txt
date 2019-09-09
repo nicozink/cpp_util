@@ -21,6 +21,7 @@ set(SRC_INCLUDE
 	${CMAKE_CURRENT_SOURCE_DIR}/include/cpp_util/log/file_log.h
 	${CMAKE_CURRENT_SOURCE_DIR}/include/cpp_util/log/log_level.h
 	${CMAKE_CURRENT_SOURCE_DIR}/include/cpp_util/log/log_object.h
+	${CMAKE_CURRENT_SOURCE_DIR}/include/cpp_util/log/log_type.h
 	${CMAKE_CURRENT_SOURCE_DIR}/include/cpp_util/log/log_writer.h
 	${CMAKE_CURRENT_SOURCE_DIR}/include/cpp_util/log/logger_base.h
 	${CMAKE_CURRENT_SOURCE_DIR}/include/cpp_util/log/logger.h

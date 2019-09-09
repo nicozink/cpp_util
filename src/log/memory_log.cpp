@@ -23,7 +23,7 @@ All rights reserved.
 // @param maximumHistory The maximum log history to
 // preserve.
 MemoryLog::MemoryLog(LogLevel bitMask, int maximumHistory)
-  : ILogWriter(bitMask)
+  : ILogWriter(bitMask, true)
 {
   logHistory = new std::string[maximumHistory];
   

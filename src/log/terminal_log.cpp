@@ -20,7 +20,7 @@ All rights reserved.
 // @param bitMask Specifies the log level to listen on.
 // @param filePath The path to the file.
 TerminalLog::TerminalLog(LogLevel bitMask)
-  : ILogWriter(bitMask)
+  : ILogWriter(bitMask, false)
 {
   
 }

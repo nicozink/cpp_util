@@ -7,18 +7,27 @@ All rights reserved.
 #define LOGGER_H
 
 // Local Includes
+#include <cpp_util/handle/handle.h>
+#include <cpp_util/handle/handle_generator.h>
 #include <cpp_util/log/log_writer.h>
 #include <cpp_util/log/logger_base.h>
 #include <cpp_util/log/log_level.h>
 #include <cpp_util/log/log_object.h>
+#include <cpp_util/log/log_type.h>
 
 // Project Includes
 #include <cpp_util/types/bit_mask.h>
 
 // External Includes
+#include <memory>
 #include <stdarg.h>
 #include <stdio.h>
 #include <vector>
+
+struct LogWriterHandle : public Handle
+{
+
+};
 
 // A logging class which accepts log messages
 // and broadcasts them to registered listenenrs.
@@ -32,15 +41,19 @@ public:
     
   // Adds the listener to the logger.
   // @param listener The listener.
-  static void AddListener(ILogWriter& listener);
+  static LogWriterHandle AddListener(std::unique_ptr<ILogWriter>&& listener);
     
-  // Removes the listener from the logger.
-  // @param listener The listener.
-  static void RemoveListener(ILogWriter& listener);
-    
+  // Removes the listeners from the logger.
+  static void RemoveListener(LogWriterHandle handle);
+  
   //
   // Public Static Methods
   //
+
+  // Enables the provided log channel with the options specified.
+  // @param logType The log type.
+  // @param logLevel The log level.
+  static void Enable(LogType logType, LogLevel logLevel);
 
   // Writes the log message to the registered listeners.
   // @param logLevel The log level.
@@ -61,6 +74,11 @@ public:
       return Error;
     }
   }
+
+  // Writes the log message to the registered listeners.
+  // @param logLevel The log level.
+  // @param format The log message.
+  static void Log(LogLevel logLevel, std::string message);
 
   //
   // Public Static Variables
@@ -85,7 +103,9 @@ private:
   //
     
   // Stores the available listeners.
-  static std::vector<ILogWriter*> listeners;
+  static std::vector<std::unique_ptr<ILogWriter>> listeners;
+
+  static HandleGenerator<LogWriterHandle> log_writer_generator;
 };
 
 #endif

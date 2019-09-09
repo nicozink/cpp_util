@@ -17,64 +17,64 @@ All rights reserved.
 // Logs nothing, and checks to make sure that the log is empty.
 TEST(Logger, NothingLogged)
 {
-  MemoryLog log(LogLevel::Info, 3);
+  auto log = std::make_unique<MemoryLog>(LogLevel::Info, 3);
   
-  Logger::AddListener(log);
-  Logger::RemoveListener(log);
+  auto handle = Logger::AddListener(std::move(log));
+  Logger::RemoveListener(handle);
   
-  ASSERT_EQ(log.Count(), 0) << "Log elements present before log start.";
+  ASSERT_EQ(log->Count(), 0) << "Log elements present before log start.";
 }
 
 // Tests logging of a variety of objects using direct logging calls.
 TEST(Logger, ItemsLoggedDirect)
 {
-  MemoryLog log(LogLevel::Debug | LogLevel::Info | LogLevel::Warning |
+  auto log = std::make_unique<MemoryLog>(LogLevel::Debug | LogLevel::Info | LogLevel::Warning |
     LogLevel::Error, 3);
   
-  Logger::AddListener(log);
+  auto handle = Logger::AddListener(std::move(log));
   
   Logger::Log(LogLevel::Info) << "Hello World!";
   Logger::Log(LogLevel::Warning) << "Integer: " << 1;
   Logger::Log(LogLevel::Error) << "Double: " << 0.5;
   
-  Logger::RemoveListener(log);
+  ASSERT_EQ(log->Count(), 3) << "Some logging elements are missing.";
   
-  ASSERT_EQ(log.Count(), 3) << "Some logging elements are missing.";
-  
-  bool result = log[0] == "Hello World!" &&
-    log[1] == "Integer: 1" && log[2] == "Double: 0.5";
+  bool result = (*log)[0] == "Hello World!" &&
+	(*log)[1] == "Integer: 1" && (*log)[2] == "Double: 0.5";
   
   ASSERT_TRUE(result) << "The log was generated incorrectly.";
+
+  Logger::RemoveListener(handle);
 }
 
 // Tests logging of a variety of objects using normal logging calls.
 TEST(Logger, ItemsLogged)
 {
-  MemoryLog log(LogLevel::Debug | LogLevel::Info | LogLevel::Warning |
+  auto log = std::make_unique<MemoryLog>(LogLevel::Debug | LogLevel::Info | LogLevel::Warning |
     LogLevel::Error, 3);
   
-  Logger::AddListener(log);
+  auto handle = Logger::AddListener(std::move(log));
   
   Logger::Info << "Hello World!";
   Logger::Warning << "Integer: " << 1;
   Logger::Error << "Double: " << 0.5;
   
-  Logger::RemoveListener(log);
+  ASSERT_EQ(log->Count(), 3) << "Some logging elements are missing.";
   
-  ASSERT_EQ(log.Count(), 3) << "Some logging elements are missing.";
-  
-  bool result = log[0] == "Hello World!" &&
-    log[1] == "Integer: 1" && log[2] == "Double: 0.5";
+  bool result = (*log)[0] == "Hello World!" &&
+	  (*log)[1] == "Integer: 1" && (*log)[2] == "Double: 0.5";
   
   ASSERT_TRUE(result) << "The log was generated incorrectly.";
+
+  Logger::RemoveListener(handle);
 }
 
 // Tests logging of a debug message.
 TEST(Logger, DebugLogged)
 {
-  MemoryLog log(LogLevel::Debug, 3);
+  auto log = std::make_unique<MemoryLog>(LogLevel::Debug, 3);
   
-  Logger::AddListener(log);
+  auto handle = Logger::AddListener(std::move(log));
   
   #ifdef DEBUG
   
@@ -86,21 +86,21 @@ TEST(Logger, DebugLogged)
   
   #endif
   
-  Logger::RemoveListener(log);
+  ASSERT_EQ(log->Count(), 1) << "The debug message is missing.";
   
-  ASSERT_EQ(log.Count(), 1) << "The debug message is missing.";
-  
-  bool result = log[0] == "Hello World!";
+  bool result = (*log)[0] == "Hello World!";
   
   ASSERT_TRUE(result) << "The log was generated incorrectly.";
+
+  Logger::RemoveListener(handle);
 }
 
 // Tests logging of a debug message without listening.
 TEST(Logger, DebugLoggedWithoutListen)
 {
-  MemoryLog log(LogLevel::Info | LogLevel::Warning | LogLevel::Error, 3);
+  auto log = std::make_unique<MemoryLog>(LogLevel::Info | LogLevel::Warning | LogLevel::Error, 3);
   
-  Logger::AddListener(log);
+  auto handle = Logger::AddListener(std::move(log));
   
   #ifdef DEBUG
   
@@ -112,104 +112,104 @@ TEST(Logger, DebugLoggedWithoutListen)
   
   #endif
   
-  Logger::RemoveListener(log);
-  
-  ASSERT_EQ(log.Count(), 0) << "Log elements present before log start.";
+  ASSERT_EQ(log->Count(), 0) << "Log elements present before log start.";
+
+  Logger::RemoveListener(handle);
 }
 
 // Tests logging of an info message.
 TEST(Logger, InfoLogged)
 {
-  MemoryLog log(LogLevel::Info, 3);
+  auto log = std::make_unique<MemoryLog>(LogLevel::Info, 3);
   
-  Logger::AddListener(log);
+  auto handle = Logger::AddListener(std::move(log));
   
   Logger::Info << "Hello World!";
   
-  Logger::RemoveListener(log);
+  ASSERT_EQ(log->Count(), 1) << "The debug message is missing.";
   
-  ASSERT_EQ(log.Count(), 1) << "The debug message is missing.";
-  
-  bool result = log[0] == "Hello World!";
+  bool result = (*log)[0] == "Hello World!";
   
   ASSERT_TRUE(result) << "The log was generated incorrectly.";
+
+  Logger::RemoveListener(handle);
 }
 
 // Tests logging of a info message without listening.
 TEST(Logger, InfoLoggedWithoutListen)
 {
-  MemoryLog log(LogLevel::Debug | LogLevel::Warning | LogLevel::Error, 3);
+  auto log = std::make_unique<MemoryLog>(LogLevel::Debug | LogLevel::Warning | LogLevel::Error, 3);
   
-  Logger::AddListener(log);
+  auto handle = Logger::AddListener(std::move(log));
   
   Logger::Info << "Hello World!";
   
-  Logger::RemoveListener(log);
-  
-  ASSERT_EQ(log.Count(), 0) << "Log elements present before log start.";
+  ASSERT_EQ(log->Count(), 0) << "Log elements present before log start.";
+
+  Logger::RemoveListener(handle);
 }
 
 // Tests logging of a warning message.
 TEST(Logger, WarningLogged)
 {
-  MemoryLog log(LogLevel::Warning, 3);
+  auto log = std::make_unique<MemoryLog>(LogLevel::Warning, 3);
   
-  Logger::AddListener(log);
+  auto handle = Logger::AddListener(std::move(log));
   
   Logger::Warning << "Hello World!";
   
-  Logger::RemoveListener(log);
+  ASSERT_EQ(log->Count(), 1) << "The debug message is missing.";
   
-  ASSERT_EQ(log.Count(), 1) << "The debug message is missing.";
-  
-  bool result = log[0] == "Hello World!";
+  bool result = (*log)[0] == "Hello World!";
   
   ASSERT_TRUE(result) << "The log was generated incorrectly.";
+
+  Logger::RemoveListener(handle);
 }
 
 // Tests logging of a warning message without listening.
 TEST(Logger, WarningLoggedWithoutListen)
 {
-  MemoryLog log(LogLevel::Debug | LogLevel::Info | LogLevel::Error, 3);
+  auto log = std::make_unique<MemoryLog>(LogLevel::Debug | LogLevel::Info | LogLevel::Error, 3);
   
-  Logger::AddListener(log);
+  auto handle = Logger::AddListener(std::move(log));
   
   Logger::Warning << "Hello World!";
   
-  Logger::RemoveListener(log);
-  
-  ASSERT_EQ(log.Count(), 0) << "Log elements present before log start.";
+  ASSERT_EQ(log->Count(), 0) << "Log elements present before log start.";
+
+  Logger::RemoveListener(handle);
 }
 
 // Tests logging of an error message.
 TEST(Logger, ErrorLogged)
 {
-  MemoryLog log(LogLevel::Error, 3);
+  auto log = std::make_unique<MemoryLog>(LogLevel::Error, 3);
   
-  Logger::AddListener(log);
+  auto handle = Logger::AddListener(std::move(log));
   
   Logger::Error << "Hello World!";
   
-  Logger::RemoveListener(log);
+  ASSERT_EQ(log->Count(), 1) << "The debug message is missing.";
   
-  ASSERT_EQ(log.Count(), 1) << "The debug message is missing.";
-  
-  bool result = log[0] == "Hello World!";
+  bool result = (*log)[0] == "Hello World!";
   
   ASSERT_TRUE(result) << "The log was generated incorrectly.";
+
+  Logger::RemoveListener(handle);
 }
 
 // Tests logging of an error message without listening.
 TEST(Logger, ErrorLoggedWithoutListen)
 {
-  MemoryLog log(LogLevel::Debug | LogLevel::Info | LogLevel::Warning, 3);
+  auto log = std::make_unique<MemoryLog>(LogLevel::Debug | LogLevel::Info | LogLevel::Warning, 3);
   
-  Logger::AddListener(log);
+  auto handle = Logger::AddListener(std::move(log));
   
   Logger::Error << "Hello World!";
   
-  Logger::RemoveListener(log);
-  
-  ASSERT_EQ(log.Count(), 0) << "Log elements present before log start.";
+  ASSERT_EQ(log->Count(), 0) << "Log elements present before log start.";
+
+  Logger::RemoveListener(handle);
 }
 

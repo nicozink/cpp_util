@@ -17,7 +17,8 @@ All rights reserved.
 
 // Initialises a new instance of the "ILogWriter" class.
 // @param bitMask The bit mask.
-ILogWriter::ILogWriter(LogLevel bitMask)
+ILogWriter::ILogWriter(LogLevel bit_mask, bool is_enabled)
 {
-  this->bitMask = bitMask;
+  m_bit_mask = bit_mask;
+  m_is_enabled = is_enabled;
 }

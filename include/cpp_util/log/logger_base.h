@@ -31,7 +31,7 @@ public:
   // Creates a new instance of the LoggerBase class.
   // @param listeners The defined listeners.
   // @param logLevel The log level.
-  LoggerBase(std::vector<ILogWriter*>& listeners, LogLevel logLevel);
+  LoggerBase(LogLevel logLevel);
     
   // Destroys this instance of the LoggerBase class. 
   ~LoggerBase();
@@ -50,7 +50,7 @@ public:
       
     stream << obj;
 
-    return LogObject(listeners, logLevel, stream.str());
+    return LogObject(logLevel, stream.str());
   }
   
 private:
@@ -58,9 +58,6 @@ private:
   //
   // Private Variables
   //
-
-  // Stores the listeners which need to receive log messages.
-  std::vector<ILogWriter*>& listeners;
 
   // Stores the log level.
   LogLevel logLevel;

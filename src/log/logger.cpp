@@ -5,12 +5,26 @@ All rights reserved.
 
 #include <cpp_util/log/logger.h>
 
-// Local Includes
-
 // Project Includes
+#include <cpp_util/log/terminal_log.h>
 
 // External Includes
 #include <algorithm>
+
+namespace
+{
+	std::vector<std::unique_ptr<ILogWriter>> GetDefaultLogs(HandleGenerator<LogWriterHandle>& handle_generator)
+	{
+		handle_generator.create();
+
+		std::vector<std::unique_ptr<ILogWriter>> result;
+
+		result.push_back(std::make_unique<TerminalLog>(LogLevel::Info));
+
+		return result;
+	}
+	
+}
 
 /*
  * Public Static Methods
@@ -20,21 +34,46 @@ All rights reserved.
 // from the rest of the text.
 // @param strList A space-separated list of words.
 // @param str The string to search for.
-void Logger::AddListener(ILogWriter& listener)
+LogWriterHandle Logger::AddListener(std::unique_ptr<ILogWriter>&& listener)
 {
-  listeners.push_back(&listener);
+  auto handle = log_writer_generator.create();
+  listeners.insert(listeners.begin() + handle.get_index(), std::move(listener));
+
+  return handle;
+}
+
+// Writes the log message to the registered listeners.
+// @param logLevel The log level.
+// @param format The log message.
+void Logger::Enable(LogType logType, LogLevel logLevel)
+{
+	auto& listener = listeners[(int)logType];
+	
+	listener->set_enabled(true);
+	listener->set_bit_mask(logLevel);
+}
+
+// Writes the log message to the registered listeners.
+// @param logLevel The log level.
+// @param format The log message.
+void Logger::Log(LogLevel logLevel, std::string message)
+{
+	for (auto it = listeners.begin(); it != listeners.end(); ++it)
+	{
+		if ((*it)->get_enabled() && BitMask::IsTrue((*it)->get_bit_mask() & logLevel))
+		{
+			(*it)->Log(message);
+		}
+	}
 }
 
 // Removes the listener from the logger.
 // @param listener The listener.
-void Logger::RemoveListener(ILogWriter& listener)
+void Logger::RemoveListener(LogWriterHandle handle)
 {
-  auto position = std::find(listeners.begin(), listeners.end(), &listener);
+  listeners.erase(listeners.begin() + handle.get_index());
 
-  if (position != listeners.end())
-  {
-    listeners.erase(position);
-  }
+  log_writer_generator.remove(handle);
 }
 
 //
@@ -42,20 +81,22 @@ void Logger::RemoveListener(ILogWriter& listener)
 //
 
 // Stores the debug logging object.
-LoggerBase Logger::Debug{ Logger::listeners, LogLevel::Debug };
+LoggerBase Logger::Debug{ LogLevel::Debug };
 
 // Stores the error logging object.
-LoggerBase Logger::Error{ Logger::listeners, LogLevel::Error };
+LoggerBase Logger::Error{ LogLevel::Error };
 
 // Stores the info logging object.
-LoggerBase Logger::Info{ Logger::listeners, LogLevel::Info };
+LoggerBase Logger::Info{ LogLevel::Info };
 
 // Stores the warning logging object.
-LoggerBase Logger::Warning{ Logger::listeners, LogLevel::Warning };
+LoggerBase Logger::Warning{ LogLevel::Warning };
 
 /*
  * Private Static Variables
  */
 
+HandleGenerator<LogWriterHandle> Logger::log_writer_generator;
+
 // Stores the available listeners.
-std::vector<ILogWriter*> Logger::listeners;
+std::vector<std::unique_ptr<ILogWriter>> Logger::listeners = std::move(GetDefaultLogs(log_writer_generator));

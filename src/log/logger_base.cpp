@@ -23,8 +23,8 @@ All rights reserved.
 // Creates a new instance of the LoggerBase class.
 // @param listeners The defined listeners.
 // @param logLevel The log level.
-LoggerBase::LoggerBase(std::vector<ILogWriter*>& listeners, LogLevel logLevel)
-: listeners(listeners), logLevel{ logLevel }
+LoggerBase::LoggerBase(LogLevel logLevel)
+: logLevel{ logLevel }
 {
 
 }

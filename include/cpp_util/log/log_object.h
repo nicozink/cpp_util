@@ -31,7 +31,7 @@ class LogObject
     // @param listeners The defined listeners.
     // @param logLevel The log level.
     // @param base The base message.
-    LogObject(std::vector<ILogWriter*>& listeners, LogLevel logLevel, std::string base);
+    LogObject(LogLevel logLevel, std::string base);
     
     // Moves to this instance of the LogObject class.
     // @param other The other object.
@@ -67,9 +67,6 @@ class LogObject
     //
     // Private Variables
     //
-
-    // Stores the listeners which need to receive log messages.
-    std::vector<ILogWriter*>& listeners;
 
     // Stores the log level.
     LogLevel logLevel;

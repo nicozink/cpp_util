@@ -20,7 +20,7 @@ All rights reserved.
 // @param bitMask Specifies the log level to listen on.
 // @param filePath The path to the file.
 FileLog::FileLog(LogLevel bitMask, std::string filePath) :
-	ILogWriter(bitMask),
+	ILogWriter(bitMask, true),
 	m_file{ filePath }
 {
 	
