@@ -17,9 +17,9 @@ All rights reserved.
 // Logs nothing, and checks to make sure that the log is empty.
 TEST(Logger, NothingLogged)
 {
-  auto log = std::make_unique<MemoryLog>(LogLevel::Info, 3);
+  auto log = std::make_shared<MemoryLog>(LogLevel::Info, 3);
   
-  auto handle = Logger::AddListener(std::move(log));
+  auto handle = Logger::AddListener(log);
   Logger::RemoveListener(handle);
   
   ASSERT_EQ(log->Count(), 0) << "Log elements present before log start.";
@@ -28,10 +28,10 @@ TEST(Logger, NothingLogged)
 // Tests logging of a variety of objects using direct logging calls.
 TEST(Logger, ItemsLoggedDirect)
 {
-  auto log = std::make_unique<MemoryLog>(LogLevel::Debug | LogLevel::Info | LogLevel::Warning |
+  auto log = std::make_shared<MemoryLog>(LogLevel::Debug | LogLevel::Info | LogLevel::Warning |
     LogLevel::Error, 3);
   
-  auto handle = Logger::AddListener(std::move(log));
+  auto handle = Logger::AddListener(log);
   
   Logger::Log(LogLevel::Info) << "Hello World!";
   Logger::Log(LogLevel::Warning) << "Integer: " << 1;
@@ -50,10 +50,10 @@ TEST(Logger, ItemsLoggedDirect)
 // Tests logging of a variety of objects using normal logging calls.
 TEST(Logger, ItemsLogged)
 {
-  auto log = std::make_unique<MemoryLog>(LogLevel::Debug | LogLevel::Info | LogLevel::Warning |
+  auto log = std::make_shared<MemoryLog>(LogLevel::Debug | LogLevel::Info | LogLevel::Warning |
     LogLevel::Error, 3);
   
-  auto handle = Logger::AddListener(std::move(log));
+  auto handle = Logger::AddListener(log);
   
   Logger::Info << "Hello World!";
   Logger::Warning << "Integer: " << 1;
@@ -72,9 +72,9 @@ TEST(Logger, ItemsLogged)
 // Tests logging of a debug message.
 TEST(Logger, DebugLogged)
 {
-  auto log = std::make_unique<MemoryLog>(LogLevel::Debug, 3);
+  auto log = std::make_shared<MemoryLog>(LogLevel::Debug, 3);
   
-  auto handle = Logger::AddListener(std::move(log));
+  auto handle = Logger::AddListener(log);
   
   #ifdef DEBUG
   
@@ -98,9 +98,9 @@ TEST(Logger, DebugLogged)
 // Tests logging of a debug message without listening.
 TEST(Logger, DebugLoggedWithoutListen)
 {
-  auto log = std::make_unique<MemoryLog>(LogLevel::Info | LogLevel::Warning | LogLevel::Error, 3);
+  auto log = std::make_shared<MemoryLog>(LogLevel::Info | LogLevel::Warning | LogLevel::Error, 3);
   
-  auto handle = Logger::AddListener(std::move(log));
+  auto handle = Logger::AddListener(log);
   
   #ifdef DEBUG
   
@@ -120,9 +120,9 @@ TEST(Logger, DebugLoggedWithoutListen)
 // Tests logging of an info message.
 TEST(Logger, InfoLogged)
 {
-  auto log = std::make_unique<MemoryLog>(LogLevel::Info, 3);
+  auto log = std::make_shared<MemoryLog>(LogLevel::Info, 3);
   
-  auto handle = Logger::AddListener(std::move(log));
+  auto handle = Logger::AddListener(log);
   
   Logger::Info << "Hello World!";
   
@@ -138,9 +138,9 @@ TEST(Logger, InfoLogged)
 // Tests logging of a info message without listening.
 TEST(Logger, InfoLoggedWithoutListen)
 {
-  auto log = std::make_unique<MemoryLog>(LogLevel::Debug | LogLevel::Warning | LogLevel::Error, 3);
+  auto log = std::make_shared<MemoryLog>(LogLevel::Debug | LogLevel::Warning | LogLevel::Error, 3);
   
-  auto handle = Logger::AddListener(std::move(log));
+  auto handle = Logger::AddListener(log);
   
   Logger::Info << "Hello World!";
   
@@ -152,9 +152,9 @@ TEST(Logger, InfoLoggedWithoutListen)
 // Tests logging of a warning message.
 TEST(Logger, WarningLogged)
 {
-  auto log = std::make_unique<MemoryLog>(LogLevel::Warning, 3);
+  auto log = std::make_shared<MemoryLog>(LogLevel::Warning, 3);
   
-  auto handle = Logger::AddListener(std::move(log));
+  auto handle = Logger::AddListener(log);
   
   Logger::Warning << "Hello World!";
   
@@ -170,9 +170,9 @@ TEST(Logger, WarningLogged)
 // Tests logging of a warning message without listening.
 TEST(Logger, WarningLoggedWithoutListen)
 {
-  auto log = std::make_unique<MemoryLog>(LogLevel::Debug | LogLevel::Info | LogLevel::Error, 3);
+  auto log = std::make_shared<MemoryLog>(LogLevel::Debug | LogLevel::Info | LogLevel::Error, 3);
   
-  auto handle = Logger::AddListener(std::move(log));
+  auto handle = Logger::AddListener(log);
   
   Logger::Warning << "Hello World!";
   
@@ -184,9 +184,9 @@ TEST(Logger, WarningLoggedWithoutListen)
 // Tests logging of an error message.
 TEST(Logger, ErrorLogged)
 {
-  auto log = std::make_unique<MemoryLog>(LogLevel::Error, 3);
+  auto log = std::make_shared<MemoryLog>(LogLevel::Error, 3);
   
-  auto handle = Logger::AddListener(std::move(log));
+  auto handle = Logger::AddListener(log);
   
   Logger::Error << "Hello World!";
   
@@ -202,9 +202,9 @@ TEST(Logger, ErrorLogged)
 // Tests logging of an error message without listening.
 TEST(Logger, ErrorLoggedWithoutListen)
 {
-  auto log = std::make_unique<MemoryLog>(LogLevel::Debug | LogLevel::Info | LogLevel::Warning, 3);
+  auto log = std::make_shared<MemoryLog>(LogLevel::Debug | LogLevel::Info | LogLevel::Warning, 3);
   
-  auto handle = Logger::AddListener(std::move(log));
+  auto handle = Logger::AddListener(log);
   
   Logger::Error << "Hello World!";
   

@@ -17,9 +17,9 @@ All rights reserved.
 // Logs nothing, and checks to make sure that the log is empty.
 TEST(MemoryLog, NothingLogged)
 {
-  auto log = std::make_unique<MemoryLog>(LogLevel::Info, 3);
+  auto log = std::make_shared<MemoryLog>(LogLevel::Info, 3);
   
-  auto handle = Logger::AddListener(std::move(log));
+  auto handle = Logger::AddListener(log);
   Logger::RemoveListener(handle);
   
   ASSERT_EQ(log->Count(), 0) << "The count of an empty log is incorrect.";
@@ -29,10 +29,10 @@ TEST(MemoryLog, NothingLogged)
 // Tests logging of a variety of objects.
 TEST(MemoryLog, ItemsLogged)
 {
-  auto log = std::make_unique<MemoryLog>(LogLevel::Debug | LogLevel::Info | LogLevel::Warning |
+  auto log = std::make_shared<MemoryLog>(LogLevel::Debug | LogLevel::Info | LogLevel::Warning |
     LogLevel::Error, 3);
   
-  auto handle = Logger::AddListener(std::move(log));
+  auto handle = Logger::AddListener(log);
   
   Logger::Info << "First!";
   Logger::Warning << "Second!";
@@ -52,10 +52,10 @@ TEST(MemoryLog, ItemsLogged)
 // Tests logging of a variety of objects while wrapping.
 TEST(MemoryLog, ItemsLoggedWrapped)
 {
-  auto log = std::make_unique<MemoryLog>(LogLevel::Debug | LogLevel::Info | LogLevel::Warning |
+  auto log = std::make_shared<MemoryLog>(LogLevel::Debug | LogLevel::Info | LogLevel::Warning |
     LogLevel::Error, 3);
   
-  auto handle = Logger::AddListener(std::move(log));
+  auto handle = Logger::AddListener(log);
   
   Logger::Info << "Discarded!";
   Logger::Info << "First!";

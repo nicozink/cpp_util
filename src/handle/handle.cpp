@@ -10,14 +10,28 @@ Handle::Handle()
 
 }
 
+Handle::Handle(int32_t handle)
+{
+	m_index = (int16_t)(handle & 0xFFFF);
+	m_id = (int16_t)(handle << 16);
+}
+
 // Returns the id of the handle.
-int Handle::get_id() const
+int32_t Handle::as_32() const
+{
+	int32_t handle = (int32_t)m_index + ((int32_t)m_id >> 16);
+
+	return handle;
+}
+
+// Returns the id of the handle.
+int16_t Handle::get_id() const
 {
 	return m_id;
 }
 
 // Returns the index of the handle.
-int Handle::get_index() const
+int16_t Handle::get_index() const
 {
 	return m_index;
 }
@@ -28,13 +42,13 @@ bool Handle::is_valid() const
 }
 
 // Sets the id of the handle.
-void Handle::set_id(int id)
+void Handle::set_id(int16_t id)
 {
 	m_id = id;
 }
 
 // Sets the index of the handle.
-void Handle::set_index(int index)
+void Handle::set_index(int16_t index)
 {
 	m_index = index;
 }

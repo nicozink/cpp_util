@@ -25,45 +25,44 @@ public:
 
 private:
 
-	std::vector<int> handles;
-    int last_id;
+	std::vector<int16_t> handles;
+	int16_t next_id;
+	int16_t next_index;
 };
 
 template <typename THandle>
 HandleGenerator<THandle>::HandleGenerator()
 {
-    handles.push_back(-1);
-    last_id = 0;
+    next_index = -1;
+	next_id = 0;
 }
 
 template <typename THandle>
 THandle HandleGenerator<THandle>::create()
 {
-    int next_index = handles[0];
-
-    if (next_index == -1)
+	if (next_index == -1)
     {
         THandle handle;
-		handle.set_index((int)handles.size());
-		handle.set_id(last_id);
-		handles.push_back(last_id);
+		handle.set_index((int16_t)handles.size());
+		handle.set_id(next_id);
+		handles.push_back(next_id);
 
-		++last_id;
+		++next_id;
 
 		return handle;
     }
     else
     {
-        int index = handles[0];
-        handles[0] = handles[index];
+		int16_t index = next_index;
+		next_index = handles[index];
 
-        handles[index] = last_id;
+        handles[index] = next_id;
         
 		THandle handle;
 		handle.set_index(index);
-		handle.set_id(last_id);
+		handle.set_id(next_id);
 
-		++last_id;
+		++next_id;
 
 		return handle;
     }
@@ -78,9 +77,9 @@ bool HandleGenerator<THandle>::is_valid(THandle handle)
 template <typename THandle>
 void HandleGenerator<THandle>::remove(THandle handle)
 {
-    int index = handle.get_index();
-	handles[index] = handles[0];
-    handles[0] = index;
+	int16_t index = handle.get_index();
+	handles[index] = next_index;
+	next_index = index;
 }
 
 #endif

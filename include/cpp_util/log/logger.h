@@ -41,7 +41,7 @@ public:
     
   // Adds the listener to the logger.
   // @param listener The listener.
-  static LogWriterHandle AddListener(std::unique_ptr<ILogWriter>&& listener);
+  static LogWriterHandle AddListener(std::shared_ptr<ILogWriter>&& listener);
     
   // Removes the listeners from the logger.
   static void RemoveListener(LogWriterHandle handle);
@@ -103,7 +103,7 @@ private:
   //
     
   // Stores the available listeners.
-  static std::vector<std::unique_ptr<ILogWriter>> listeners;
+  static std::vector<std::shared_ptr<ILogWriter>> listeners;
 
   static HandleGenerator<LogWriterHandle> log_writer_generator;
 };

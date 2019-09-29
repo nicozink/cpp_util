@@ -13,11 +13,11 @@ All rights reserved.
 
 namespace
 {
-	std::vector<std::unique_ptr<ILogWriter>> GetDefaultLogs(HandleGenerator<LogWriterHandle>& handle_generator)
+	std::vector<std::shared_ptr<ILogWriter>> GetDefaultLogs(HandleGenerator<LogWriterHandle>& handle_generator)
 	{
 		handle_generator.create();
 
-		std::vector<std::unique_ptr<ILogWriter>> result;
+		std::vector<std::shared_ptr<ILogWriter>> result;
 
 		result.push_back(std::make_unique<TerminalLog>(LogLevel::Info));
 
@@ -34,7 +34,7 @@ namespace
 // from the rest of the text.
 // @param strList A space-separated list of words.
 // @param str The string to search for.
-LogWriterHandle Logger::AddListener(std::unique_ptr<ILogWriter>&& listener)
+LogWriterHandle Logger::AddListener(std::shared_ptr<ILogWriter>&& listener)
 {
   auto handle = log_writer_generator.create();
   listeners.insert(listeners.begin() + handle.get_index(), std::move(listener));
@@ -99,4 +99,4 @@ LoggerBase Logger::Warning{ LogLevel::Warning };
 HandleGenerator<LogWriterHandle> Logger::log_writer_generator;
 
 // Stores the available listeners.
-std::vector<std::unique_ptr<ILogWriter>> Logger::listeners = std::move(GetDefaultLogs(log_writer_generator));
+std::vector<std::shared_ptr<ILogWriter>> Logger::listeners = GetDefaultLogs(log_writer_generator);
