@@ -12,6 +12,7 @@ PROJECT(cpp_util VERSION 1.0.0)
 enable_testing()
 
 set(SRC_INCLUDE
+	${CMAKE_CURRENT_SOURCE_DIR}/include/cpp_util/command_buffer/command_buffer.h
 	${CMAKE_CURRENT_SOURCE_DIR}/include/cpp_util/debug/assert.h
 	${CMAKE_CURRENT_SOURCE_DIR}/include/cpp_util/event/event.h
 	${CMAKE_CURRENT_SOURCE_DIR}/include/cpp_util/event/listener.h
@@ -57,6 +58,7 @@ set(SRC_MAIN
 	${CMAKE_CURRENT_SOURCE_DIR}/src/types/variant_type.cpp)
 
 set(SRC_TEST
+	${CMAKE_CURRENT_SOURCE_DIR}/test/command_buffer/test_command_buffer.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/test/event/test_event.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/test/log/test_log_move.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/test/log/test_logger.cpp
