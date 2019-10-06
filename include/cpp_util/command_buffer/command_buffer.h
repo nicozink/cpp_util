@@ -29,6 +29,8 @@ public:
 
     TCommandKey peek();
 
+	void reset();
+
 private:
 
 	std::vector<TCommandKey> m_commands;
@@ -87,6 +89,15 @@ TCommandKey CommandBuffer<TCommandKey>::peek()
     }
 
     return m_commands[m_current_command];
+}
+
+template <typename TCommandKey>
+void CommandBuffer<TCommandKey>::reset()
+{
+	m_commands.clear();
+	m_data.clear();
+
+	m_current_command = 0;
 }
 
 #endif
