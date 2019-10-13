@@ -17,7 +17,7 @@ All rights reserved.
  */
 enum class LogType : int
 {
-  Terminal = 0
+  TerminalLogger = 0
 };
 
 #endif
