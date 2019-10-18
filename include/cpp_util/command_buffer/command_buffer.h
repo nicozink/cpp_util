@@ -23,7 +23,7 @@ public:
     TCommand& add(TCommandKey key);
 
     template <typename TCommand>
-    std::pair<TCommandKey, TCommand&> get_next();
+    TCommand& get_next();
 
     bool has_next();
 
@@ -59,19 +59,18 @@ TCommand& CommandBuffer<TCommandKey>::add(TCommandKey key)
 
 template <typename TCommandKey>
 template <typename TCommand>
-std::pair<TCommandKey, TCommand&> CommandBuffer<TCommandKey>::get_next()
+TCommand& CommandBuffer<TCommandKey>::get_next()
 {
 	if (!has_next())
 	{
 		throw std::runtime_error("Attempt to access empty command");
 	}
 
-	auto key = m_commands[m_current_command];
 	auto& data = *std::any_cast<TCommand>(&m_data[m_current_command]);
 	
 	++m_current_command;
 
-	return { key, data };
+	return data;
 }
 
 template <typename TCommandKey>

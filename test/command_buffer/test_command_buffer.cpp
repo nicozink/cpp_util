@@ -25,10 +25,11 @@ TEST(CommandBuffer, TestAdd)
 	int& value = command_buffer.add<int>(100);
 	value = 200;
 
+	ASSERT_EQ(command_buffer.peek(), 100);
+
 	auto command = command_buffer.get_next<int>();
 
-	ASSERT_EQ(command.first, 100);
-	ASSERT_EQ(command.second, 200);
+	ASSERT_EQ(command, 200);
 }
 
 TEST(CommandBuffer, TestAddExecute)
@@ -41,7 +42,7 @@ TEST(CommandBuffer, TestAddExecute)
 	func1 = [&val1]() {
 		val1 = 100;
 	};
-
+	
 	int val2 = 0;
 
 	auto& func2 = command_buffer.add<std::function<void()>>(2);
@@ -49,14 +50,15 @@ TEST(CommandBuffer, TestAddExecute)
 		val2 = 200;
 	};
 
+	ASSERT_EQ(command_buffer.peek(), 1);
+
 	auto command1 = command_buffer.get_next<std::function<void()>>();
-	command1.second();
+	command1();
+
+	ASSERT_EQ(command_buffer.peek(), 2);
 
 	auto command2 = command_buffer.get_next<std::function<void()>>();
-	command2.second();
-
-	ASSERT_EQ(command1.first, 1);
-	ASSERT_EQ(command2.first, 2);
+	command2();
 
 	ASSERT_EQ(val1, 100);
 	ASSERT_EQ(val2, 200);
