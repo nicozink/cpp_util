@@ -29,6 +29,8 @@ class ILogWriter
     // @param bitMask The bit mask.
     ILogWriter(LogLevel bitMask, bool is_enabled);
 
+    virtual ~ILogWriter() = default;
+
     /*
      * Public Virtual Methods
      */
