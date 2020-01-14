@@ -76,7 +76,7 @@ TCommand& CommandBuffer<TCommandKey>::get_next()
 template <typename TCommandKey>
 bool CommandBuffer<TCommandKey>::has_next()
 {
-	return (m_current_command < m_commands.size());
+	return ((size_t)m_current_command < m_commands.size());
 }
 
 template <typename TCommandKey>
