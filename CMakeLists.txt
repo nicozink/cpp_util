@@ -106,5 +106,8 @@ create_executable(cpp_util_test test ${SRC_TEST})
 
 target_link_libraries(cpp_util_test cpp_util unittest)
 
-add_test(NAME cpp_util_test
-	COMMAND cpp_util_test)
+if (${CMAKE_SYSTEM_NAME} MATCHES "Emscripten")
+	add_test(NAME cpp_util_test COMMAND node "${CMAKE_CURRENT_BINARY_DIR}/cpp_util_test.js")
+else ()
+	add_test(NAME cpp_util_test COMMAND cpp_util_test)
+endif ()
