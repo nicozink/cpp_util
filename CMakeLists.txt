@@ -11,6 +11,10 @@ PROJECT(cpp_util VERSION 1.0.0)
 
 enable_testing()
 
+if (EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/build_tools/cmake/cmake_utils.cmake)
+	include(build_tools/cmake/cmake_utils.cmake)
+endif()
+
 set(SRC_INCLUDE
 	${CMAKE_CURRENT_SOURCE_DIR}/include/cpp_util/command_buffer/command_buffer.h
 	${CMAKE_CURRENT_SOURCE_DIR}/include/cpp_util/debug/assert.h
@@ -88,7 +92,7 @@ target_include_directories(cpp_util
 	PRIVATE
 	${CMAKE_CURRENT_SOURCE_DIR}/src)
 
-if (EXISTS libraries/unittest/CMakeLists.txt)
+if (EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/libraries/unittest/CMakeLists.txt)
 	add_subdirectory(libraries/unittest)
 endif()
 
@@ -104,28 +108,3 @@ target_link_libraries(cpp_util_test cpp_util unittest)
 
 add_test(NAME cpp_util_test
 	COMMAND cpp_util_test)
-
-set(config_install_dir "lib/cmake/${PROJECT_NAME}")
-set(include_install_dir "include")
-
-set(generated_dir "${CMAKE_CURRENT_BINARY_DIR}/generated")
-set(version_config "${generated_dir}/${PROJECT_NAME}ConfigVersion.cmake")
-set(project_config "${generated_dir}/${PROJECT_NAME}Config.cmake")
-set(targets_export_name "${PROJECT_NAME}Targets")
-
-include(CMakePackageConfigHelpers)
-write_basic_package_version_file("${version_config}" COMPATIBILITY SameMajorVersion)
-configure_package_config_file("cmake/Config.cmake.in" "${project_config}" INSTALL_DESTINATION "${config_install_dir}")
-
-install(TARGETS cpp_util EXPORT cpp_utilTargets
-	LIBRARY DESTINATION lib
-	ARCHIVE DESTINATION lib
-	INCLUDES DESTINATION include)
-install(DIRECTORY include/cpp_util DESTINATION include)
-install(EXPORT cpp_utilTargets
-	FILE cpp_utilTargets.cmake
-	DESTINATION lib/cmake/cpp_util)
-install(
-	FILES "${project_config}" "${version_config}"
-	DESTINATION "${config_install_dir}"
-)

@@ -8,6 +8,7 @@
 #define cpp_util_handle_handle_generator_h
 
 // System Includes
+#include <cstdint>
 #include <vector>
 
 template <typename THandle>
