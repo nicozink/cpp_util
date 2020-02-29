@@ -14,6 +14,7 @@ All rights reserved.
 
 // External Includes
 #include <cstddef>
+#include <cstring>
 #include <functional>
 #include <memory>
 
