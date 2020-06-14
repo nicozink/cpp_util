@@ -15,6 +15,8 @@ if (EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/build_tools/cmake/cmake_utils.cmake)
 	include(build_tools/cmake/cmake_utils.cmake)
 endif()
 
+find_package(Boost REQUIRED COMPONENTS system)
+
 set(SRC_INCLUDE
 	${CMAKE_CURRENT_SOURCE_DIR}/include/cpp_util/command_buffer/command_buffer.h
 	${CMAKE_CURRENT_SOURCE_DIR}/include/cpp_util/debug/assert.h
@@ -84,6 +86,8 @@ foreach(_source IN ITEMS ${SRC_INCLUDE} ${SRC_MAIN} ${SRC_TEST})
 endforeach()
 
 create_library(cpp_util library ${SRC_INCLUDE} ${SRC_MAIN})
+
+target_link_libraries(cpp_util Boost::system)
 
 target_include_directories(cpp_util
 	PUBLIC
