@@ -4,16 +4,16 @@
  
 cmake_minimum_required(VERSION 3.0)
 
+if (EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/build_tools/cmake/cmake_utils.cmake)
+	include(build_tools/cmake/cmake_utils.cmake)
+endif()
+
 #Use solution folders. 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 PROJECT(cpp_util VERSION 1.0.0)
 
 enable_testing()
-
-if (EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/build_tools/cmake/cmake_utils.cmake)
-	include(build_tools/cmake/cmake_utils.cmake)
-endif()
 
 find_package(Boost REQUIRED COMPONENTS system)
 
