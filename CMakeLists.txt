@@ -4,8 +4,8 @@
  
 cmake_minimum_required(VERSION 3.0)
 
-if (EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/build_tools/cmake/cmake_utils.cmake)
-	include(build_tools/cmake/cmake_utils.cmake)
+if (EXISTS ${CMAKE_SOURCE_DIR}/build_tools/cmake/cmake_utils.cmake)
+	include(${CMAKE_SOURCE_DIR}/build_tools/cmake/cmake_utils.cmake)
 endif()
 
 #Use solution folders. 
