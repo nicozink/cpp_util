@@ -4,8 +4,8 @@
  
 cmake_minimum_required(VERSION 3.0)
 
-if (EXISTS ${CMAKE_SOURCE_DIR}/build_tools/cmake/cmake_utils.cmake)
-	include(${CMAKE_SOURCE_DIR}/build_tools/cmake/cmake_utils.cmake)
+if (EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/build_tools/cmake/cmake_utils.cmake)
+	include(${CMAKE_CURRENT_SOURCE_DIR}/build_tools/cmake/cmake_utils.cmake)
 endif()
 
 #Use solution folders. 
@@ -111,7 +111,7 @@ create_executable(cpp_util_test test ${SRC_TEST})
 target_link_libraries(cpp_util_test cpp_util unittest)
 
 if (${CMAKE_SYSTEM_NAME} MATCHES "Emscripten")
-	add_test(NAME cpp_util_test COMMAND node "${CMAKE_CURRENT_BINARY_DIR}/cpp_util_test.js")
+	add_test(NAME cpp_util_test COMMAND ${NODE_JS} "${CMAKE_CURRENT_BINARY_DIR}/cpp_util_test.js")
 else ()
 	add_test(NAME cpp_util_test COMMAND cpp_util_test)
 endif ()
