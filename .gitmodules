@@ -1,9 +1,6 @@
 [submodule "libraries/unittest"]
 	path = libraries/unittest
 	url = https://github.com/nicozink/unittest.git
-[submodule "build_tools"]
-	path = build_tools
-	url = https://github.com/nicozink/build_tools.git
 [submodule "vcpkg"]
 	path = vcpkg
 	url = https://github.com/microsoft/vcpkg.git
