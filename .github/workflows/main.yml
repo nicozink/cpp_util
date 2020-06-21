@@ -10,7 +10,7 @@ jobs:
         os: [windows-latest, ubuntu-latest, macos-latest]
         type: [native, emscripten]
         exclude:
-        - os: windows-latest
+        - os: ubuntu-latest
           type: emscripten
         - os: macos-latest
           type: emscripten
