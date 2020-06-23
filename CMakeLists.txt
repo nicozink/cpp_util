@@ -4,9 +4,7 @@
  
 cmake_minimum_required(VERSION 3.0)
 
-if (EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/build_tools/cmake/cmake_utils.cmake)
-	include(${CMAKE_CURRENT_SOURCE_DIR}/build_tools/cmake/cmake_utils.cmake)
-endif()
+include(${LIBRARY_FOLDER}/build_tools/cmake/cmake_utils.cmake)
 
 #Use solution folders. 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
@@ -96,9 +94,7 @@ target_include_directories(cpp_util
 	PRIVATE
 	${CMAKE_CURRENT_SOURCE_DIR}/src)
 
-if (EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/libraries/unittest/CMakeLists.txt)
-	add_subdirectory(libraries/unittest)
-endif()
+add_subdirectory(${LIBRARY_FOLDER}/unittest unittest)
 
 target_compile_features(cpp_util PUBLIC cxx_std_17)
 
