@@ -94,7 +94,7 @@ target_include_directories(cpp_util
 	PRIVATE
 	${CMAKE_CURRENT_SOURCE_DIR}/src)
 
-add_subdirectory(${LIBRARY_FOLDER}/unittest unittest)
+import_library(unittest)
 
 target_compile_features(cpp_util PUBLIC cxx_std_17)
 
