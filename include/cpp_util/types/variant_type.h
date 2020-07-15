@@ -82,9 +82,6 @@ public:
 	void set(T* item);
 
 	template <typename T>
-	void set(T& item);
-
-	template <typename T>
 	void set(T&& item);
 
 	template <typename T>
@@ -114,23 +111,13 @@ void VariantType::set(T* item)
 }
 
 template <typename T>
-void VariantType::set(T& item)
-{
-    typename std::remove_reference<T>::type* item_ptr = new T(item);
-
-	variant_ptr = std::shared_ptr<void>((void*)item_ptr, [](void* p) {
-		delete static_cast<T*>(p);
-	});
-}
-
-template <typename T>
 void VariantType::set(T&& item)
 {
-	T* item_ptr = new T(std::move(item));
+	using type_t = typename std::decay<T>::type;
 
-	variant_ptr = std::shared_ptr<void>((void*)item_ptr, [](void* p) {
-		delete static_cast<T*>(p);
-	});
+	type_t* item_ptr = new type_t(std::forward<T>(item));
+
+	variant_ptr = std::shared_ptr<type_t>(item_ptr);
 }
 
 template <typename T>

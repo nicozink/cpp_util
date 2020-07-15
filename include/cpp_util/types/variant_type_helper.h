@@ -17,7 +17,7 @@ public:
 	static VariantType Create(T& value)
 	{
 		VariantType variant_type;
-		variant_type.set<T>(value);
+		variant_type.set(value);
 		
 		return variant_type;
 	}
