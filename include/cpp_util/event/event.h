@@ -53,7 +53,7 @@ public:
 	// @param param The parameter passed to the listeners.
 	void Fire(TParams... params)
 	{
-		for (auto listener : listeners)
+		for (auto& listener : listeners)
 		{
 			listener(params...);
 		}

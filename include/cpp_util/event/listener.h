@@ -36,26 +36,10 @@ class Listener
       
     }
 
-    // Destroys this instance of the Listener class.
-    virtual ~Listener()
-    {
-    
-    }
-
     //
     // Operators
     //
-    
-    // Assigns the properties of another object to this one.
-    // @rhs The parameter passed to the assignment.
-    Listener& operator=(const Listener& rhs)
-    {
-      callback = rhs.callback;
-      listenerId = rhs.listenerId;
-      
-      return *this;
-    }
-    
+
     // Compares the listeners for equality.
     // @rhs The parameter passed to the assignment.
     bool operator==(const Listener& param)
